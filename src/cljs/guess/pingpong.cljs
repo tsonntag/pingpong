@@ -12,7 +12,7 @@
 (def speed0 10)
 
 (def p0 [0 10])
-(def dp0 [0.1 0.1])
+(def dp0 [0.3 0.3])
 (def pmin [0 0])
 (def pmax (mapv - field-size ball-size))
 (def state0 [p0 dp0 pmin pmax])
@@ -25,7 +25,6 @@
 
 (defn next-i [i di imin imax]
   (let [i1 (+ i di)]
-    #_(println "next-i" i di imin imax "i1=" i1 "-d1="(- di))
     (cond
       (< i1 imin) [imin (- di) imin imax]
       (> i1 imax) [imax (- di) imin imax]
@@ -37,6 +36,7 @@
   (transpose (apply map next-i state)))
 
 (defn step! []
+  (println "STEP")
   (swap! state next-state))
 
 (defn running? [] @interval)
@@ -48,8 +48,7 @@
 
 (defn start! []
   (stop!)
-  (let [intv (/ 10.0 @speed)]
-    (println "STArt" @speed intv)
+  (let [intv (/ 1000.0 @speed)]
     (reset! interval (js/setInterval step! intv))))
 
 (add-watch speed nil #(if (running?) (start!)))
@@ -62,15 +61,9 @@
 (defn scale [i]
   (str (* unit i) "px"))
 
-(def field 
-  (let [[x y] field-size]
-    {:style
-     {:background-color "#F0F0F0"
-      :width  (scale x)
-      :height (scale y)}}))
-
-(defn ball [[x y]]
-  (let [[bx by] ball-size]
+(defn ball []
+  (let [[bx by] ball-size
+        [x y] (first @state)]
     [:div#ball
      {:style
       {:background-color "#FF0000"
@@ -80,10 +73,18 @@
        :width  (scale bx)
        :height (scale by)}}]))
 
+(defn field []
+  (let [[x y] field-size]
+    [:div#field
+     {:style {:background-color "#F0F0F0"
+              :width  (scale x)
+              :height (scale y)}}
+     (ball)]))
+
 (defn speed-slider []
   [:div.speed-slider
    "Speed" 
-   [:input {:type "range" :min 1 :max 100 
+   [:input {:type "range" :min 1 :max 1000 
             :value @speed
             :on-change #(reset! speed (float (-> % .-target .-value)))}]])
 
@@ -93,6 +94,7 @@
      [:div (link-to "#/" "home")]
      [:button {:on-click toggle} (if (running?) "Stop" "Start")]
      (speed-slider)
-     [:div#field field
-      (ball (first @state))]]
+     (field)
+     [:br]
+     [:br]]
     ))
