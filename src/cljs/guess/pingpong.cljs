@@ -7,6 +7,10 @@
 
 ; unit in px
 (def unit 10)
+
+(defn scale [i]
+  (str (* unit i) "px"))
+
 (def ball-size [1 1])
 (def field-size [50 50])
 (def speed0 10)
@@ -20,8 +24,6 @@
 (def state (atom state0)) 
 (def speed (atom speed0))
 (def interval (atom nil))
-
-(defn reset [] (reset! state state0))
 
 (defn next-i [i di imin imax]
   (let [i1 (+ i di)]
@@ -57,9 +59,6 @@
   (if (running?) 
     (stop!)
     (start!)))
-
-(defn scale [i]
-  (str (* unit i) "px"))
 
 (defn ball []
   (let [[bx by] ball-size
