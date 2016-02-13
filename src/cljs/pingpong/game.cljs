@@ -1,6 +1,6 @@
-(ns guess.pingpong
+(ns pingpong.game
   (:require
-    [guess.lib :refer [link-to]]
+    [pingpong.lib :refer [link-to]]
     [reagent.core :refer [atom]]
     ))
 

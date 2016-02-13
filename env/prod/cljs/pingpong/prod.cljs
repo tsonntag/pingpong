@@ -1,5 +1,5 @@
-(ns guess.prod
-  (:require [guess.core :as core]))
+(ns pingpong.prod
+  (:require [pingpong.core :as core]))
 
 ;;ignore println statements in prod
 (set! *print-fn* (fn [& _]))

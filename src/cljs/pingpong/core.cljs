@@ -1,7 +1,7 @@
-(ns guess.core
+(ns pingpong.core
     (:require
-      [guess.pingpong :as pingpong]
-      [guess.lib :refer [link-to]]
+      [pingpong.game :as game]
+      [pingpong.lib :refer [link-to]]
       [reagent.core :as reagent :refer [atom]]
       [reagent.session :as session]
       [secretary.core :as secretary :include-macros true]
@@ -20,7 +20,7 @@
   ])
 
 (defn about-page []
-  [:div [:h2 "About guess"]
+  [:div [:h2 "About pingpong"]
    [:div (link-to "#/" "home")]])
 
 (defn forms-page []
@@ -42,7 +42,7 @@
   (session/put! :current-page #'about-page))
 
 (secretary/defroute "/pingpong" []
-  (session/put! :current-page #'pingpong/page))
+  (session/put! :current-page #'game/page))
 
 ;; -------------------------
 ;; History
@@ -54,6 +54,7 @@
      (fn [event]
        (secretary/dispatch! (.-token event))))
     (.setEnabled true)))
+
 
 ;; -------------------------
 ;; Initialize app

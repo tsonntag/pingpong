@@ -1,5 +1,5 @@
-(ns ^:figwheel-no-load guess.dev
-  (:require [guess.core :as core]
+(ns ^:figwheel-no-load pingpong.dev
+  (:require [pingpong.core :as core]
             [figwheel.client :as figwheel :include-macros true]
             [weasel.repl :as weasel]
             [reagent.core :as r]))

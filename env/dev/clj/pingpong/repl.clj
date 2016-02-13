@@ -1,6 +1,6 @@
-(ns guess.repl
-  (:use guess.handler
-        guess.dev
+(ns pingpong.repl
+  (:use pingpong.handler
+        pingpong.dev
         ring.server.standalone
         [ring.middleware file-info file]))
 

@@ -1,5 +1,5 @@
-(ns guess.server
-  (:require [guess.handler :refer [app]]
+(ns pingpong.server
+  (:require [pingpong.handler :refer [app]]
             [environ.core :refer [env]]
             [ring.adapter.jetty :refer [run-jetty]])
   (:gen-class))
